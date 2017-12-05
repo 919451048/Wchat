@@ -3,20 +3,21 @@ namespace frontend\controllers;
 use yii;
 use yii\web\Controller;
 class IndexController extends Controller{
+
     public  $enableCsrfValidation=false;
+
     public $xml;
+    
     public function actionIndex(){
        if($echostr = yii::$app->request->get('echostr')){
            echo $echostr;
            exit();
        }
        $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+    //    file_put_contents("1.txt",$this->xml."1112");
        switch($this->xml->MsgType){
            case 'text':
                 $this->responeText();
-                break;
-            case 'event':
-                $this->responeEvent();
                 break;
        }
     }
@@ -42,7 +43,14 @@ class IndexController extends Controller{
     }
 
     public function sendResponse($con,$msg_type='text'){
-       $xml='<xml><ToUserName><![CDATA['.$this->xml->FormUser.']]></ToUserName><FromUserName><![CDATA['.$this->xml->ToUser.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA['.$msg_type.']]></MsgType><Content><![CDATA['.$con.']]></Content></xml>';
+       $xml='<xml>'
+         .'<ToUserName><![CDATA['.$this->xml->formUser.']]></ToUserName>'
+         .'<FromUserName><![CDATA['.$this->xml->toUser.']]></FromUserName>'
+         .'<CreateTime>'.time().'</CreateTime>'
+         .'<MsgType><![CDATA['.$msg_type.']]></MsgType>'
+         .'<Content><![CDATA['.$con.']]></Content></xml>';
         echo $xml;
     }
 }
+?>
+
