@@ -5,6 +5,6 @@ use yii\web\Controller;
 class IndexController extends Controller{
 
     public function actionIndex(){
-       echo  $_GET['echoStr'];
+       echo  $_GET['echostr'];
     }
 }
