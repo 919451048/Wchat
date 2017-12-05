@@ -1,5 +1,3 @@
-
-
 # phpstorm project files
 .idea
 
@@ -7,9 +5,9 @@
 nbproject
 
 # zend studio for eclipse project files
-.buildpath
-.project
-.settings
+
+
+
 
 
 
@@ -24,4 +22,4 @@ nbproject
 /phpunit.xml
 
 # vagrant runtime
-/.vagrant
+
