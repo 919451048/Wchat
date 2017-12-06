@@ -9,19 +9,20 @@ class IndexController extends Controller{
     public $xml;
     
     public function actionInit(){
-        $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-        file_put_contents("1.txt","123123132");
-         switch($this->xml->MsgType){
-             case 'text':
-                  $this->responeText();
-                  break;
-         }
+        
     }
     public function actionIndex(){
        if($echostr = yii::$app->request->get('echostr')){
            echo $echostr;
            exit();
        }
+       $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+       file_put_contents("1.txt","123123132");
+        switch($this->xml->MsgType){
+            case 'text':
+                 $this->responeText();
+                 break;
+        }
     }
 
     /**
@@ -46,8 +47,8 @@ class IndexController extends Controller{
 
     public function sendResponse($con,$msg_type='text'){
        $xml='<xml>'
-         .'<ToUserName><![CDATA['.$this->xml->formUser.']]></ToUserName>'
-         .'<FromUserName><![CDATA['.$this->xml->toUser.']]></FromUserName>'
+         .'<ToUserName><![CDATA['.$this->xml->FromUserName.']]></ToUserName>'
+         .'<FromUserName><![CDATA['.$this->xml->ToUserName.']]></FromUserName>'
          .'<CreateTime>'.time().'</CreateTime>'
          .'<MsgType><![CDATA['.$msg_type.']]></MsgType>'
          .'<Content><![CDATA['.$con.']]></Content></xml>';
