@@ -8,17 +8,19 @@ class IndexController extends Controller{
 
     public $xml;
     
+    public function actionInit(){
+        $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+        file_put_contents("1.txt",$this->xml);
+         switch($this->xml->MsgType){
+             case 'text':
+                  $this->responeText();
+                  break;
+         }
+    }
     public function actionIndex(){
-    //    if($echostr = yii::$app->request->get('echostr')){
-    //        echo $echostr;
-    //        exit();
-    //    }
-       $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-      //file_put_contents("1.txt",$this->xml);
-       switch($this->xml->MsgType){
-           case 'text':
-                $this->responeText();
-                break;
+       if($echostr = yii::$app->request->get('echostr')){
+           echo $echostr;
+           exit();
        }
     }
 
