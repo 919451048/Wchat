@@ -10,7 +10,7 @@ class IndexController extends Controller{
     
     public function actionInit(){
         $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-        file_put_contents("1.txt",$this->xml);
+        file_put_contents("1.txt","123123132");
          switch($this->xml->MsgType){
              case 'text':
                   $this->responeText();
