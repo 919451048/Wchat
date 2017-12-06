@@ -9,12 +9,12 @@ class IndexController extends Controller{
     public $xml;
     
     public function actionIndex(){
-       if($echostr = yii::$app->request->get('echostr')){
-           echo $echostr;
-           exit();
-       }
+    //    if($echostr = yii::$app->request->get('echostr')){
+    //        echo $echostr;
+    //        exit();
+    //    }
        $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-      file_put_contents("1.txt",print_r($this->xml."11",true));
+      //file_put_contents("1.txt",$this->xml);
        switch($this->xml->MsgType){
            case 'text':
                 $this->responeText();
