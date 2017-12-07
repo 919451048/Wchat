@@ -5,28 +5,67 @@ use yii\web\Controller;
 class IndexController extends Controller{
 
     public  $enableCsrfValidation=false;
-
+    public $appID='wx5ae9c35eaa769498';
+    public $appsecret ='=de9e005fd6cf46babe4bd4bda21f5c0f';
     public $xml;
     
-    public function actionInit(){
-        
-    }
     public function actionIndex(){
        if($echostr = yii::$app->request->get('echostr')){
            echo $echostr;
            exit();
        }
-       $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-       file_put_contents("1.txt","123123132");
-        switch($this->xml->MsgType){
-            case 'text':
-                 $this->responeText();
-                 break;
-            case 'event':
-                 $this->responeEvent();
-            ;break;
+       $token=$this->getToken();
+      // echo $token;die;
+       $url ='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$token;
+       $arr=[
+           'button'=>['type'=>'click',
+               'name'=>'你点我啊哈哈哈',
+               'key'=>'dian'],
+            'button'=> ['type'=>'news',
+               'name'=>'时讯',
+               'key'=>'lla'
+               ]
+           ];
+           $json = json_encode($arr,JSON_UNESCAPED_UNICODE );
+        echo  $this->send_request($url,$json,1);
+    //    $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+    //    file_put_contents("1.txt","123123132");
+    //     switch($this->xml->MsgType){
+    //         case 'text':
+    //              $this->responeText();
+    //              break;
+    //         case 'event':
+    //              $this->responeEvent();
+    //         ;break;
 
+    //     }
+    }
+
+    public function send_request($url,$data=" ",$post=false){
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_HEADER,0);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        if($post){
+            curl_setopt($ch,CURLOPT_POST,1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
         }
+        $return = curl_exec($ch);
+        curl_close($ch);
+        return $return;          
+    }
+
+    public function getToken(){
+
+         $api = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='
+             .$this->appID.'&secret ='.$this->appsecret;
+         $json = $this->send_request($api);
+         return $json;
+    }
+    public function home(){
+
     }
 
     /**
