@@ -14,31 +14,32 @@ class IndexController extends Controller{
            echo $echostr;
            exit();
        }
-       $token=$this->getToken();
-      // echo $token;die;
-       $url ='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$token;
-       $arr=[
-           'button'=>['type'=>'click',
-               'name'=>'你点我啊哈哈哈',
-               'key'=>'dian'],
-            'button'=> ['type'=>'news',
-               'name'=>'时讯',
-               'key'=>'lla'
-               ]
-           ];
-           $json = json_encode($arr,JSON_UNESCAPED_UNICODE );
-        echo  $this->send_request($url,$json,1);
-    //    $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-    //    file_put_contents("1.txt","123123132");
-    //     switch($this->xml->MsgType){
-    //         case 'text':
-    //              $this->responeText();
-    //              break;
-    //         case 'event':
-    //              $this->responeEvent();
-    //         ;break;
-
-    //     }
+       echo $token;die;
+       $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+       file_put_contents("1.txt","123123132");
+        switch($this->xml->MsgType){
+            case 'text':
+                 $this->responeText();
+                 break;
+            case 'event':
+                 $this->responeEvent();
+            ;break;
+        }
+    }
+    public function  actionSetmenu(){
+        $token=$this->getToken();
+        $url ='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$token;
+        $arr=[
+            'button'=>['type'=>'click',
+                'name'=>'你点我啊哈哈哈',
+                'key'=>'dian'],
+             'button'=> ['type'=>'news',
+                'name'=>'时讯',
+                'key'=>'lla'
+                ]
+            ];
+         $json = json_encode($arr,JSON_UNESCAPED_UNICODE );
+         echo  $this->send_request($url,$json,1);
     }
 
     public function send_request($url,$data=" ",$post=false){
@@ -56,7 +57,6 @@ class IndexController extends Controller{
         curl_close($ch);
         return $return;          
     }
-
     public function getToken(){
 
          $api = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='
@@ -64,10 +64,6 @@ class IndexController extends Controller{
          $json = $this->send_request($api);
          return $json;
     }
-    public function home(){
-
-    }
-
     /**
      * 文本处理方法
      * 
