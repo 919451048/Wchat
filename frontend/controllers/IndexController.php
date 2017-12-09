@@ -6,7 +6,7 @@ class IndexController extends Controller{
 
     public  $enableCsrfValidation=false;
     public $appID='wx5ae9c35eaa769498';
-    public $appsecret ='=de9e005fd6cf46babe4bd4bda21f5c0f';
+    protected $secret="de9e005fd6cf46babe4bd4bda21f5c0f";
     public $xml;
     
     public function actionIndex(){
@@ -14,9 +14,8 @@ class IndexController extends Controller{
            echo $echostr;
            exit();
        }
-       echo $token;die;
+      // echo $token;die;
        $this->xml = simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-       file_put_contents("1.txt","123123132");
         switch($this->xml->MsgType){
             case 'text':
                  $this->responeText();
@@ -28,18 +27,42 @@ class IndexController extends Controller{
     }
     public function  actionSetmenu(){
         $token=$this->getToken();
+       // echo $token;die;
         $url ='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$token;
-        $arr=[
-            'button'=>['type'=>'click',
-                'name'=>'你点我啊哈哈哈',
-                'key'=>'dian'],
-             'button'=> ['type'=>'news',
-                'name'=>'时讯',
-                'key'=>'lla'
+        $json = [
+            'button'=>[
+                [
+                    'type'=>'click',
+                    'name'=>'今日热文',
+                    'key'=>'lla',
+                ],
+                [
+                    'type'=>'click',
+                    'name'=>'时讯',
+                    'key'=>'lla',
                 ]
-            ];
-         $json = json_encode($arr,JSON_UNESCAPED_UNICODE );
-         echo  $this->send_request($url,$json,1);
+
+                // ],
+                // [
+                //     'name'=>'时讯',
+                //     'sub_burron'=>[
+                //         ['type'=>'view',
+                //         'name'=>'搜索',
+                //         'url'=>'www.baidu.com',
+                //         ],
+                //         [
+                //             'type'=>'click',
+                //             'name'=>'wxa',
+                //             'key'=>'aaaa',
+                //         ],
+                //     ]
+                // ]
+            ]
+        ];
+        $jsson = json_encode($json,JSON_UNESCAPED_UNICODE);
+      //  echo $jsson;die;
+        $res = $this->send_request($url,$jsson,1);
+        var_dump($res);
     }
 
     public function send_request($url,$data=" ",$post=false){
@@ -49,7 +72,7 @@ class IndexController extends Controller{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
         curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
-        if($post){
+        if($post!=false){
             curl_setopt($ch,CURLOPT_POST,1);
             curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
         }
@@ -59,10 +82,12 @@ class IndexController extends Controller{
     }
     public function getToken(){
 
-         $api = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='
-             .$this->appID.'&secret ='.$this->appsecret;
-         $json = $this->send_request($api);
-         return $json;
+        $api='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx5ae9c35eaa769498&secret=de9e005fd6cf46babe4bd4bda21f5c0f';
+        
+        $json = $this->send_request($api);
+        $arr=json_decode($json,true);
+        return $arr['access_token'];
+        //print_r($json);
     }
     /**
      * 文本处理方法
