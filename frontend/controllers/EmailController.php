@@ -34,6 +34,7 @@ class EmailController extends Controller{
 		$mail= Yii::$app->mailer->compose();
 		$redis= yii::$app->redis;
 		$lala=$redis->rpop('email');
+		$lala || die('没有邮件可以发送了');
 		echo "$lala","<br>";
 		yii::$app->db->createCommand()->update('email',['status'=>1],['email'=>$lala])->execute();
 		$mail->setTo("$lala");  
