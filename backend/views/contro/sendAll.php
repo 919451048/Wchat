@@ -127,13 +127,15 @@ ul{ list-style: none}
 
 <div class="right">
     <div class="input-message">
-        <form action="">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+        <form action=""method="post" enctype="multipart/form-data">
+            <!-- <textarea name="" id="" cols="30" rows="10"></textarea>
             <a href="" class="upload">上传图片</a>
             <div class="image-view">
                 图片预览区
-            </div>
-            <a href="" class="submit">提交</a>
+            </div> -->
+            <input type="file" name="img">;
+           <!-- <a href="" class="submit">提交</a> --> 
+           <input type="submit" class='submit'>
         </form>
     </div>
 </div>
