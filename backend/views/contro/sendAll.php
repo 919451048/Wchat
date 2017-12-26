@@ -1,3 +1,8 @@
+<?php 
+use yii\helpers\Url;
+
+ ?>
+
 <meta charset="utf8">
 
 <style>
@@ -118,7 +123,7 @@ ul{ list-style: none}
 
 <div class="left">
     <ul>
-        <li>网站设置</li>
+        <li><a href="<?php echo Url::toRoute(['contro/sendmsg']); ?>">群发消息</a></li>
         <li>静态资源管理</li>
         <li>微信消息</li>
         <li class="selected">微信群发</li>

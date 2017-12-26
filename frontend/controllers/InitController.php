@@ -65,22 +65,32 @@ class InitController extends CommonController{
                         'key'=>'news'
                     ],
                     [
-                        'type'=>'click',
-                        'name'=>'熱文',
-                        'key'=>'rewen'
+                        'name'=>'JS-SDK',
+                        'sub_button'=>[
+                          [
+                            'type'=>'view',
+                            'name'=>'JS-SDK',
+                            'url'=>'http://47.93.251.43/Wchat/backend/web/index.php?r=contro/jss'
+                          ],
+                          [
+                            'type'=>'click',
+                            'name'=>'抽奖',
+                            'key'=>'choujiang',
+                          ]
+                        ]
                     ],
                     [
-                        'name'=>'更多',
+                        'name'=>'网页授权',
                         'sub_button'=>[
                             [
                                 'type'=>'view',
-                                'name'=>'往期熱文',
-                                'url'=>'http://www.jg.com'
+                                'name'=>'静默授权',
+                                'url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5ae9c35eaa769498&redirect_uri=http%3A%2F%2F47.93.251.43%2FWchat%2Ffrontend%2Fweb%2Findex.php%3Fr%3Dlogin%2Fshouquan&response_type=code&scope=snsapi_base&state=123#wechat_redirect'
                             ],
                             [
                                 'type'=>"view",
-                                'name'=>'視屏',
-                                'url'=>"http://www.baidu.com"
+                                'name'=>'非静默授权',
+                                'url'=>"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5ae9c35eaa769498&redirect_uri=http%3A%2F%2F47.93.251.43%2FWchat%2Fbackend%2Fweb%2Findex.php%3Fr%3Dcontro%2Fnomore&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect"
     
                             ],
                         ]
