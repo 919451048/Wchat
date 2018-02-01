@@ -22,6 +22,9 @@ class  ControController extends CommonController{
               $url="https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=".$this->actionToken()."&type=image";
         $da=$this->curl_request($url,$filedata,1);
             var_dump($da);
+
+
+            echo 1111;
         }     
     }
 
